@@ -1,0 +1,86 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+configurations { detekt }
+
+dependencies {
+  detekt(libs.detekt.cli)
+  detekt(libs.detekt.formatting)
+}
+
+tasks.register('detektCi', JavaExec) {
+  description = "Run Kotlin static analysis on changed files."
+  group = "CI"
+  mainClass = "io.gitlab.arturbosch.detekt.cli.Main"
+  classpath = configurations.detekt
+
+  doFirst {
+    def changedFilesList = getDiffedFilesFromBranch()
+
+    if (changedFilesList.isEmpty()) {
+      println("No kotlin files changed! Skipping task...")
+      // forces detekt to ignore all files
+      changedFilesList = "$rootDir/gradle"
+    } else {
+      println("Running detekt on the changed files:")
+      println(changedFilesList)
+    }
+
+    def input = "$changedFilesList"
+    def config = "$rootDir/buildconfig/detekt.yml"
+    def exclude = ".*/resources/.*,.*/build/.*"
+    def report = "html:${project.buildDir}/reports/detekt.html"
+    def autoCorrect = "--auto-correct"
+
+    def params = [
+        autoCorrect,
+        '-i', input,
+        '-c', config,
+        '-ex', exclude,
+        '-r', report
+    ]
+
+    args(params)
+    jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
+  }
+}
+
+tasks.register('detektFormat', JavaExec) {
+  group = "ci"
+  mainClass = "io.gitlab.arturbosch.detekt.cli.Main"
+  classpath = configurations.detekt
+  def input = "$rootDir"
+  def config = "$rootDir/buildconfig/detekt.yml"
+  def exclude = ".*/resources/.*,.*/build/.*"
+  def report = "html:${project.buildDir}/reports/detekt.html"
+  def autoCorrect = "--auto-correct"
+
+  def params = [
+      autoCorrect,
+      '-i', input,
+      '-c', config,
+      '-ex', exclude,
+      '-r', report
+  ]
+
+  args(params)
+  jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
+}
+
+private String getDiffedFilesFromBranch() {
+  def outputStream = new ByteArrayOutputStream()
+  def cmd = "path=\$(git rev-parse --show-toplevel) && git diff --diff-filter=d --name-only @{upstream} --relative | sed \"s,^,\$path/,\" | grep '\\.kt\\?\$'"
+  execute(cmd, outputStream)
+
+  if (outputStream.toString().isEmpty()) {
+    println("Diff cmd is Empty!")
+    return ""
+  }
+
+  return outputStream.toString()
+      .trim()
+      .replace("\n", ",")
+}
+
+private static def execute(cmd, output) {
+  ['sh', '-c', cmd].execute().waitForProcessOutput(output, System.err)
+}

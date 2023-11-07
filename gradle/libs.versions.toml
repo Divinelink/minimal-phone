@@ -1,0 +1,89 @@
+[versions]
+kotlin = "1.9.10"
+ksp = "1.9.10-1.0.13"
+agp = "8.1.2"
+core-ktx = "1.12.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+lifecycle-runtime-ktx = "2.6.2"
+activity-compose = "1.8.0"
+start-up = "1.1.1"
+
+detekt = "1.23.0"
+
+# Network & Serialization
+ktor = "2.2.2"
+kotlinx-serialization = "1.4.1"
+
+# Depedency Injection
+koin = "3.5.0"
+
+appcompat = "1.6.1"
+material = "1.10.0"
+
+# Compose
+compose-bom = "2023.10.01"
+compose-compiler-extesion = "1.5.3"
+
+# Timber
+timber = "5.0.1"
+
+# Testing
+kover = "0.7.4"
+
+[libraries]
+# Android X
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-start-up = { group = "androidx.startup", name = "startup-runtime", version.ref = "start-up" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# Jetpack Compose
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+compose-ui-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+
+# Network & Serialization
+ktor-client-core = { group = 'io.ktor', name = 'ktor-client-core', version.ref = 'ktor' }
+ktor-client-android = { group = 'io.ktor', name = 'ktor-client-android', version.ref = 'ktor' }
+ktor-client-logging = { group = 'io.ktor', name = 'ktor-client-logging', version.ref = 'ktor' }
+ktor-client-content-negotiation = { group = 'io.ktor', name = 'ktor-client-content-negotiation', version.ref = 'ktor' }
+ktor-serialization-kotlinx-json = { group = 'io.ktor', name = 'ktor-serialization-kotlinx-json', version.ref = 'ktor' }
+kotlinx-serialization-json = { group = 'org.jetbrains.kotlinx', name = 'kotlinx-serialization-json', version.ref = 'kotlinx-serialization' }
+
+# Depedency Injection
+koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+
+# Misc
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+
+# Detekt
+detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
+[plugins]
+application = { id = "com.android.application", version.ref = "agp" }
+com-android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "detekt" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+#detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt-cli" }
+#detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt-cli" }
+
+[bundles]
